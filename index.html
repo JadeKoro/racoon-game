@@ -6,148 +6,26 @@
     <title>Raccoon Rascal: The Great Trash Heist</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #87CEEB; /* Sky blue fallback */
-        }
-        #ui-layer {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            color: white;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
-            pointer-events: none;
-        }
-        h1 {
-            margin: 0;
-            font-size: 2rem;
-            color: #ffd700;
-            -webkit-text-stroke: 1px #d35400;
-        }
-        #score-board {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-        #controls-hint {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-weight: bold;
-            text-shadow: 1px 1px 2px black;
-            text-align: center;
-            background: rgba(0,0,0,0.3);
-            padding: 10px 20px;
-            border-radius: 20px;
-        }
-        #start-screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            color: white;
-            text-align: center;
-        }
-        #audio-settings {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.3);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 400px;
-        }
-        .audio-input-group {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 5px;
-        }
-        .audio-input-group label {
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-        input[type="file"] {
-            font-size: 0.8rem;
-        }
-        #win-screen {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.9);
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
-            display: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            color: #333;
-            z-index: 101;
-        }
-        #win-screen h2 {
-            color: #27ae60;
-            font-size: 3rem;
-            margin: 0 0 20px 0;
-        }
-        button {
-            background: #e67e22;
-            border: none;
-            padding: 15px 30px;
-            color: white;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: transform 0.2s;
-            pointer-events: auto;
-        }
-        button:hover {
-            transform: scale(1.05);
-            background: #d35400;
-        }
-
-        #squeak-bubble {
-    position: fixed;
-    left: 50%;
-    top: 55%;
-    transform: translate(-50%, -50%);
-    background: white;
-    color: black;
-    padding: 8px 14px;
-    border-radius: 18px;
-    font-weight: bold;
-    font-size: 14px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.15s, transform 0.4s;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-}
-
+        body { margin: 0; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #87CEEB; }
+        #ui-layer { position: absolute; top: 20px; left: 20px; color: white; text-shadow: 2px 2px 0px rgba(0,0,0,0.5); pointer-events: none; }
+        h1 { margin: 0; font-size: 2rem; color: #ffd700; -webkit-text-stroke: 1px #d35400; }
+        #score-board { font-size: 1.5rem; font-weight: bold; margin-top: 10px; }
+        #controls-hint { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: white; font-weight: bold; text-shadow: 1px 1px 2px black; text-align: center; background: rgba(0,0,0,0.3); padding: 10px 20px; border-radius: 20px; }
+        #start-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 100; color: white; text-align: center; }
+        #win-screen { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255, 255, 255, 0.9); padding: 40px; border-radius: 20px; text-align: center; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.3); color: #333; z-index: 101; }
+        #win-screen h2 { color: #27ae60; font-size: 3rem; margin: 0 0 20px 0; }
+        button { background: #e67e22; border: none; padding: 15px 30px; color: white; font-size: 1.2rem; border-radius: 50px; cursor: pointer; font-weight: bold; transition: transform 0.2s; pointer-events: auto; }
+        button:hover { transform: scale(1.05); background: #d35400; }
+        #squeak-bubble { position: fixed; left: 50%; top: 55%; transform: translate(-50%, -50%); background: white; color: black; padding: 8px 14px; border-radius: 18px; font-weight: bold; font-size: 14px; opacity: 0; pointer-events: none; transition: opacity 0.15s, transform 0.4s; box-shadow: 0 4px 12px rgba(0,0,0,0.25); }
     </style>
 </head>
 <body>
 
     <div id="start-screen">
-    <h1>Raccoon Rascal</h1>
-    <p style="margin-bottom: 25px;">The Great Trash Heist</p>
-
-    <button id="start-btn">Start Game</button>
-</div>
-
-
+        <h1>Raccoon Rascal</h1>
+        <p style="margin-bottom: 25px;">The Great Trash Heist</p>
+        <button id="start-btn">Start Game</button>
+    </div>
 
     <div id="ui-layer">
         <h1>Raccoon Rascal</h1>
@@ -155,11 +33,10 @@
     </div>
 
     <div id="controls-hint">
-        WASD or Arrows to Move &bull; SHIFT to Sprint
+        WASD to Move &bull; SHIFT to Sprint &bull; F to Squeak (Rhythm!) &bull; E to Gamble
     </div>
 
     <div id="squeak-bubble">*squeak!*</div>
-
 
     <div id="win-screen">
         <h2>Trash Master!</h2>
@@ -172,17 +49,13 @@
         const WORLD_SIZE = 200;
         const TRASH_COUNT = 15;
         const COLORS = {
-            raccoonGrey: 0x7f8c8d,
-            raccoonDark: 0x2c3e50,
-            raccoonWhite: 0xecf0f1,
-            grass: 0x7bc043,
-            sky: 0x87CEEB,
-            wood: 0x8e44ad 
+            raccoonGrey: 0x7f8c8d, raccoonDark: 0x2c3e50, raccoonWhite: 0xecf0f1,
+            grass: 0x7bc043, sky: 0x87CEEB, wood: 0x8e44ad
         };
 
         // --- Global Variables ---
         let scene, camera, renderer;
-        let raccoon, tail, headGroup; 
+        let raccoon, tail, headGroup;
         let trashItems = [];
         let trees = [];
         let particles = [];
@@ -191,61 +64,143 @@
         let listener;
         let radioSound;
         let radioMesh;
-        let bpm = 98;                 // example beats per minute
-        let beatInterval = 0.6122;   // seconds per beat
-        let lastBeatTime = 0;          // timestamp of last beat
-        let combo = 0;                 // current combo
-        let comboActive = false;       // is combo running
-        let comboTimer = 0;            // time left for combo
-        let comboDuration = 4;         // combo lasts 4 beats (2 measures at 4/4)
-        let comboMultiplier = 2;       // trash points multiplier during combo
-        let isDancing = false;   // is raccoon in dance mode
-        let danceSpeed = 6;      // dance animation speed
-        let danceIntensity = 0; // grows with streak
-        let maxDanceIntensity = 3; // caps the wackiness
-
-
-
-
         
-        // Audio state (local files)
+        // Rhythm / Combo Variables
+        let bpm = 98;
+        let beatInterval = 0.6122;
+        let lastBeatTime = 0;
+        let combo = 0;
+        let comboActive = false;
+        let comboTimer = 0;
+        let comboDuration = 4;
+        let comboMultiplier = 2;
+        let isDancing = false;
+        let danceSpeed = 6;
+        let danceIntensity = 0;
+        let maxDanceIntensity = 3;
 
-
-let squeakSound = new Audio("squeak.wav");
-squeakSound.volume = 0.8;
-
-let lastSqueakTime = 0;
-const squeakCooldown = 400; // ms
-
-
-let collectSound = new Audio("collect.wav");
-collectSound.volume = 0.7;
-
+        // Audio Objects
+        let gamblingSound = new Audio("gambling-music.mp3");
+        let squeakSound = new Audio("squeak.wav");
+        squeakSound.volume = 0.8;
+        let lastSqueakTime = 0;
+        let collectSound = new Audio("collect.wav");
+        collectSound.volume = 0.7;
 
         // Input state
         const keys = { w: false, a: false, s: false, d: false, Shift: false };
-
+        
         // Physics/Movement
-        const playerSpeed = 0.25; 
+        const playerSpeed = 0.25;
         const sprintMultiplier = 1.6;
         const turnSpeed = 0.06;
-        let currentRotVel = 0; 
-
-        // Animation state
+        let currentRotVel = 0;
         let time = 0;
 
-        // --- Audio Engine ---
+        // Gambling State
+        let nearRadio = false;
+        let gamblingActive = false;
+
         function playCollectSound() {
-    collectSound.currentTime = 0;
-    collectSound.play();
-}
+            collectSound.currentTime = 0;
+            collectSound.play().catch(e => console.log("Audio play failed (interaction needed)"));
+        }
 
+        function checkRadioProximity() {
+            if(!radioMesh || !raccoon) return;
+            const dist = raccoon.position.distanceTo(radioMesh.position);
+            nearRadio = dist < 5; // Increased range slightly
+            if (nearRadio && !gamblingActive) {
+                showGamblePrompt();
+            } else {
+                hideGamblePrompt();
+            }
+        }
 
-        
-        
+        function showGamblePrompt() {
+            let prompt = document.getElementById("gamble-prompt");
+            if (!prompt) {
+                prompt = document.createElement("div");
+                prompt.id = "gamble-prompt";
+                prompt.style.position = "absolute";
+                prompt.style.bottom = "100px";
+                prompt.style.left = "50%";
+                prompt.style.transform = "translateX(-50%)";
+                prompt.style.background = "rgba(0,0,0,0.7)";
+                prompt.style.color = "white";
+                prompt.style.padding = "15px 25px";
+                prompt.style.borderRadius = "15px";
+                prompt.style.fontWeight = "bold";
+                prompt.style.textAlign = "center";
+                prompt.innerText = "Press E to tune the radio to the Gambling Station!";
+                document.body.appendChild(prompt);
+            }
+        }
 
+        function hideGamblePrompt() {
+            const prompt = document.getElementById("gamble-prompt");
+            if (prompt) prompt.remove();
+        }
 
+        window.addEventListener("keydown", (e) => {
+            if (!nearRadio || gamblingActive) return;
+            if (e.key.toLowerCase() === "e") {
+                openGamblingStation();
+            }
+        });
 
+        function openGamblingStation() {
+            gamblingActive = true;
+            if (radioSound && radioSound.isPlaying) radioSound.pause();
+            if (gamblingSound) { gamblingSound.currentTime = 0; gamblingSound.play().catch(e=>{}); }
+
+            const modal = document.createElement("div");
+            modal.id = "gamble-modal";
+            modal.style.position = "absolute";
+            modal.style.top = "50%";
+            modal.style.left = "50%";
+            modal.style.transform = "translate(-50%, -50%)";
+            modal.style.background = "rgba(255,255,255,0.95)";
+            modal.style.padding = "30px";
+            modal.style.borderRadius = "20px";
+            modal.style.textAlign = "center";
+            modal.style.zIndex = 200;
+            modal.innerHTML = `
+                <h2>Master Raccoon</h2>
+                <p>"Ah, you want to gamble your hard-earned trash points, eh?"</p>
+                <button id="red-btn">Red</button>
+                <button id="black-btn">Black</button>
+                <button id="cancel-btn">Cancel</button>
+            `;
+            document.body.appendChild(modal);
+
+            document.getElementById("red-btn").onclick = () => resolveGamble("red");
+            document.getElementById("black-btn").onclick = () => resolveGamble("black");
+            document.getElementById("cancel-btn").onclick = () => closeGambleModal();
+        }
+
+        function closeGambleModal() {
+            gamblingActive = false;
+            const modal = document.getElementById("gamble-modal");
+            if (modal) modal.remove();
+            if (gamblingSound) gamblingSound.pause();
+            if (radioSound && !radioSound.isPlaying) radioSound.play().catch(e=>{});
+        }
+
+        function resolveGamble(choice) {
+            const outcome = Math.random() < 0.5 ? "red" : "black";
+            let resultText = "";
+            if (choice === outcome) {
+                score *= 2;
+                resultText = `You won! Your points are now ${score}`;
+            } else {
+                score = Math.floor(score / 2);
+                resultText = `You lost! Your points are now ${score}`;
+            }
+            document.getElementById("score").innerText = score;
+            alert(resultText);
+            closeGambleModal();
+        }
 
         function init() {
             scene = new THREE.Scene();
@@ -258,7 +213,6 @@ collectSound.volume = 0.7;
 
             listener = new THREE.AudioListener();
             camera.add(listener);
-
 
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
@@ -284,10 +238,7 @@ collectSound.volume = 0.7;
             createEnvironment();
             createRaccoon();
             createRadio();
-
             spawnTrash(TRASH_COUNT);
-
-            
 
             document.getElementById('total').innerText = TRASH_COUNT;
 
@@ -295,26 +246,22 @@ collectSound.volume = 0.7;
             window.addEventListener('keydown', (e) => handleKey(e, true));
             window.addEventListener('keyup', (e) => handleKey(e, false));
             window.addEventListener('keydown', (e) => {
-    if (!isGameActive) return;
-
-    if (e.key.toLowerCase() === "f") {
-        playSqueak();
-    }
-});
-
+                if (!isGameActive) return;
+                if (e.key.toLowerCase() === "f") {
+                    playSqueak();
+                }
+            });
 
             document.getElementById('start-btn').onclick = () => {
-    isGameActive = true;
-    document.getElementById('start-screen').style.display = 'none';
-
-    if (listener && listener.context.state === "suspended") {
-        listener.context.resume();
-    }
-};
+                isGameActive = true;
+                document.getElementById('start-screen').style.display = 'none';
+                if (listener && listener.context.state === "suspended") {
+                    listener.context.resume();
+                }
+            };
 
             animate();
         }
-        
 
         function createGround() {
             const geometry = new THREE.CircleGeometry(WORLD_SIZE / 2, 64);
@@ -412,7 +359,6 @@ collectSound.volume = 0.7;
                 leg.name = pos.name;
                 raccoon.add(leg);
             });
-
             scene.add(raccoon);
         }
 
@@ -443,34 +389,34 @@ collectSound.volume = 0.7;
         }
 
         function createRadio() {
-    // simple radio mesh
-    const geo = new THREE.BoxGeometry(2, 1, 1);
-    const mat = new THREE.MeshStandardMaterial({ color: 0x444444 });
-    radioMesh = new THREE.Mesh(geo, mat);
-    radioMesh.position.set(8, 0.5, 8);
-    radioMesh.castShadow = true;
-    scene.add(radioMesh);
+            // simple radio mesh
+            const geo = new THREE.BoxGeometry(2, 1, 1);
+            const mat = new THREE.MeshStandardMaterial({ color: 0x444444 });
+            radioMesh = new THREE.Mesh(geo, mat);
+            radioMesh.position.set(8, 0.5, 8);
+            radioMesh.castShadow = true;
+            scene.add(radioMesh);
 
-    // positional audio
-    radioSound = new THREE.PositionalAudio(listener);
+            // positional audio
+            radioSound = new THREE.PositionalAudio(listener);
+            
+            // --- FIX 2: Define audioLoader ---
+            const audioLoader = new THREE.AudioLoader(); 
 
-    const audioLoader = new THREE.AudioLoader();
-    audioLoader.load("bg-music.mp3", (buffer) => {
-        radioSound.setBuffer(buffer);
-        radioSound.setLoop(true);
-        radioSound.setVolume(1.0);
+            // Load main background music
+            audioLoader.load("bg-music.mp3", (buffer) => {
+                radioSound.setBuffer(buffer);
+                radioSound.setLoop(true);
+                radioSound.setVolume(1.0);
+                radioSound.setRefDistance(5);
+                radioSound.setMaxDistance(60);
+                radioSound.setRolloffFactor(1.5);
+                radioSound.play();
+            });
 
-        // 🔊 distance settings
-        radioSound.setRefDistance(5);   // loud within 5 units
-        radioSound.setMaxDistance(60);  // fades by here
-        radioSound.setRolloffFactor(1.5);
-
-        radioSound.play();
-    });
-
-    radioMesh.add(radioSound);
-}
-
+            // --- FIX 1: Add to mesh INSIDE the function ---
+            radioMesh.add(radioSound); 
+        }
 
         function spawnTrash(count) {
             const trashTypes = [
@@ -522,37 +468,32 @@ collectSound.volume = 0.7;
         }
 
         function checkCollisions() {
-    for (let i = trashItems.length - 1; i >= 0; i--) {
-        const item = trashItems[i];
-        if (raccoon.position.distanceTo(item.position) < 2.5) {
-            playCollectSound();
-            createParticleExplosion(item.position, item.material.color);
-
-            scene.remove(item);
-            trashItems.splice(i, 1);
-
-            // calculate points with combo
-            let points = 1;
-            if (comboActive) points *= comboMultiplier;
-
-            score += points;
-            document.getElementById('score').innerText = score;
-
-            if (score >= TRASH_COUNT) gameWin();
+            for (let i = trashItems.length - 1; i >= 0; i--) {
+                const item = trashItems[i];
+                if (raccoon.position.distanceTo(item.position) < 2.5) {
+                    playCollectSound();
+                    createParticleExplosion(item.position, item.material.color);
+                    scene.remove(item);
+                    trashItems.splice(i, 1);
+                    
+                    let points = 1;
+                    if (comboActive) points *= comboMultiplier;
+                    
+                    score += points;
+                    document.getElementById('score').innerText = score;
+                    
+                    if (score >= TRASH_COUNT) gameWin();
+                }
+            }
         }
-    }
-}
-
 
         function gameWin() {
-    document.getElementById('win-screen').style.display = 'block';
-    createParticleExplosion(raccoon.position, 0xffd700);
-
-    if (radioSound && radioSound.isPlaying) {
-        radioSound.stop();
-    }
-}
-
+            document.getElementById('win-screen').style.display = 'block';
+            createParticleExplosion(raccoon.position, 0xffd700);
+            if (radioSound && radioSound.isPlaying) {
+                radioSound.stop();
+            }
+        }
 
         function updateRaccoon() {
             if (!raccoon || !isGameActive) return;
@@ -621,107 +562,87 @@ collectSound.volume = 0.7;
                 updateCamera();
                 updateTrash();
                 checkCollisions();
+                checkRadioProximity();
                 updateParticles();
-            if (comboActive) {
-                comboTimer -= 0.016; // assuming ~60fps
-                if (comboTimer <= 0) {
-                comboActive = false;
-                combo = 0;
-                isDancing = false;  // reset dance when combo ends
-                danceIntensity = 0;
                 
-    }
-}
-
+                if (comboActive) {
+                    comboTimer -= 0.016; 
+                    if (comboTimer <= 0) {
+                        comboActive = false;
+                        combo = 0;
+                        isDancing = false;
+                        danceIntensity = 0;
+                    }
+                }
             }
             renderer.render(scene, camera);
         }
 
+        // --- Init call is meant to be at the end, but functions are hoisted ---
         init();
 
         let squeakBubbleTimer = null;
 
-function showSqueakBubble(text) {
-    const b = document.getElementById("squeak-bubble");
-b.style.background = `rgba(255, ${200 - danceIntensity * 50}, 0, 1)`; // gets more “gold” as intensity grows
+        function showSqueakBubble(text) {
+            const b = document.getElementById("squeak-bubble");
+            b.style.background = `rgba(255, ${200 - danceIntensity * 50}, 0, 1)`; 
+            if (!b) return;
+            b.innerText = text || "*squeak!*";
+            b.style.opacity = "1";
+            b.style.transform = "translate(-50%, -70%)";
+            clearTimeout(squeakBubbleTimer);
+            squeakBubbleTimer = setTimeout(() => {
+                b.style.opacity = "0";
+                b.style.transform = "translate(-50%, -50%)";
+            }, 900);
+        }
 
-    if (!b) return;
+        function playSqueak() {
+            const now = Date.now() / 1000;
+            let timeSinceLastBeat = (now - lastBeatTime) % beatInterval;
+            const beatWindow = 0.15; 
+            if (timeSinceLastBeat < beatWindow || timeSinceLastBeat > beatInterval - beatWindow) {
+                // On beat
+                combo++;
+                comboActive = true;
+                comboTimer = comboDuration;
+                if (combo >= 10) {
+                    isDancing = true;
+                    danceIntensity = Math.min(maxDanceIntensity, (combo - 9) * 0.2); 
+                }
+                showSqueakBubble("Combo x" + combo);
+            } else {
+                // Off beat
+                combo = 0;
+                comboActive = false;
+                isDancing = false;
+                danceIntensity = 0;
+                showSqueakBubble("*squeak!*");
+            }
+            squeakSound.currentTime = 0;
+            squeakSound.play().catch(e=>{});
+            lastSqueakTime = now;
+        }
 
-    b.innerText = text || "*squeak!*";
-    b.style.opacity = "1";
-    b.style.transform = "translate(-50%, -70%)";
-
-    clearTimeout(squeakBubbleTimer);
-    squeakBubbleTimer = setTimeout(() => {
-        b.style.opacity = "0";
-        b.style.transform = "translate(-50%, -50%)";
-    }, 900);
-}
-
-function playSqueak() {
-    const now = Date.now() / 1000; // simple timestamp in seconds
-
-    // check if squeak is on beat
-    let timeSinceLastBeat = (now - lastBeatTime) % beatInterval;
-    const beatWindow = 0.15; // 150ms window to count as "on beat"
-if (timeSinceLastBeat < beatWindow || timeSinceLastBeat > beatInterval - beatWindow) {
-    // ✅ On beat
-    combo++;
-    comboActive = true;
-    comboTimer = comboDuration;
-
-    // increase dance intensity gradually
-    if (combo >= 10) {
-        isDancing = true;
-        danceIntensity = Math.min(maxDanceIntensity, (combo - 9) * 0.2); // ramps up after 10
-    }
-
-    showSqueakBubble("Combo x" + combo);
-
-} else {
-    // ❌ Off beat
-    combo = 0;
-    comboActive = false;
-    isDancing = false;
-    danceIntensity = 0;
-    showSqueakBubble("*squeak!*");
-}
-
-    squeakSound.currentTime = 0;
-    squeakSound.play();
-    lastSqueakTime = now;
-}
-
-function updateRaccoonDance() {
-    if (!raccoon || !isDancing) return;
-
-    const t = time * (danceSpeed + danceIntensity * 2); // faster as intensity grows
-
-    // Body bounce
-    raccoon.children[0].position.y = 1.5 + Math.sin(t * (1 + danceIntensity)) * (0.5 + danceIntensity * 0.3);
-
-    // Head bob and swivel
-    if (headGroup) {
-        headGroup.position.y = 2.5 + Math.sin(t * 1.5) * (0.5 + danceIntensity * 0.3);
-        headGroup.rotation.y = Math.sin(t * 2) * (0.5 + danceIntensity * 0.4);
-        headGroup.rotation.x = Math.sin(t * 1.2) * 0.2 * danceIntensity;
-    }
-
-    // Tail swing
-    if (tail) {
-        tail.position.y = 1.2 + Math.sin(t * 2) * (0.5 + danceIntensity * 0.2);
-        tail.rotation.y = Math.sin(t * 4) * (1.2 + danceIntensity * 0.5);
-        tail.rotation.x = Math.sin(t * 3) * (0.2 + danceIntensity * 0.2);
-    }
-
-    // Legs kick out more wildly as intensity grows
-    raccoon.children.forEach(child => {
-        if (child.name === 'fl' || child.name === 'br') child.rotation.x = Math.sin(t * 3) * (1 + danceIntensity);
-        else if (child.name === 'fr' || child.name === 'bl') child.rotation.x = Math.cos(t * 3) * (1 + danceIntensity);
-    });
-}
-
-
+        function updateRaccoonDance() {
+            if (!raccoon || !isDancing) return;
+            const t = time * (danceSpeed + danceIntensity * 2);
+            raccoon.children[0].position.y = 1.5 + Math.sin(t * (1 + danceIntensity)) * (0.5 + danceIntensity * 0.3);
+            if (headGroup) {
+                headGroup.position.y = 2.5 + Math.sin(t * 1.5) * (0.5 + danceIntensity * 0.3);
+                headGroup.rotation.y = Math.sin(t * 2) * (0.5 + danceIntensity * 0.4);
+                headGroup.rotation.x = Math.sin(t * 1.2) * 0.2 * danceIntensity;
+            }
+            if (tail) {
+                tail.position.y = 1.2 + Math.sin(t * 2) * (0.5 + danceIntensity * 0.2);
+                tail.rotation.y = Math.sin(t * 4) * (1.2 + danceIntensity * 0.5);
+                tail.rotation.x = Math.sin(t * 3) * (0.2 + danceIntensity * 0.2);
+            }
+            raccoon.children.forEach(child => {
+                if (child.name === 'fl' || child.name === 'br') child.rotation.x = Math.sin(t * 3) * (1 + danceIntensity);
+                else if (child.name === 'fr' || child.name === 'bl') child.rotation.x = Math.cos(t * 3) * (1 + danceIntensity);
+            });
+        }
     </script>
 </body>
 </html>
